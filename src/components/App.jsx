@@ -5,7 +5,7 @@ import { Form } from "./ContactForm/ContactForm";
 import { ContactList } from "./ContactList/ContactList";
 import { Filter } from "./Filter/Filter";
 
-
+const LS_KEY = 'contacts'
 export class App extends Component {
  state = {
   contacts: [
@@ -15,6 +15,21 @@ export class App extends Component {
     {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
   ],
   filter: ''
+  }
+  
+  componentDidMount() {
+    const contacts = localStorage.getItem(LS_KEY);
+    const parsedContacts = JSON.parse(contacts);
+    this.setState({ contacts: parsedContacts });
+    
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem(LS_KEY, JSON.stringify(this.state.contacts))
+      
+    }
+    
   }
   addContact = (template) => {
     const { contacts } = this.state;
