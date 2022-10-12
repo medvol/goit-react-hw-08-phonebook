@@ -1,4 +1,5 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { nanoid } from 'nanoid'
 import { Box } from "./Box";
 import { Form } from "./ContactForm/ContactForm";
@@ -14,33 +15,21 @@ const initialContacts = [
 ];
 
 export const App = () => {
-    const [contacts, setContacts] = useState(()=> JSON.parse(localStorage.getItem(LS_KEY)) ?? initialContacts);
+    // const [contacts, setContacts] = useState(()=> JSON.parse(localStorage.getItem(LS_KEY)) ?? initialContacts);
     const [filter, setFilter] = useState('');
 
-    useEffect(() => {
-      localStorage.setItem(LS_KEY, JSON.stringify(contacts))
+    // useEffect(() => {
+    //   localStorage.setItem(LS_KEY, JSON.stringify(contacts))
       
-    }, [contacts]);
-
-  const addContact = (data) => {
-         
-    const duplicateContact =
-      contacts.find(contact => contact.name.toLowerCase() === data.name.toLowerCase());
-    
-    if (duplicateContact) return window.alert(`${data.name} is already in contacts`);
-    const contact = { ...data, id: nanoid() };
-    setContacts(prev => [...prev, contact]);
-  };
+    // }, [contacts]);
+  
+  const contacts = useSelector(state => state.contacts); 
 
   const getVisibleContact = () => {    
     const normalizeFilter = filter.toLowerCase();
     return contacts.filter(contact => contact.name.toLowerCase().includes(normalizeFilter));
   }
 
-  const deleteContacts = (contactId) => {
-    setContacts(prev => prev.filter(contact => contact.id !== contactId) )
-    
-  }
 
    const visibleContact = getVisibleContact();
 
@@ -50,10 +39,10 @@ export const App = () => {
         p={ 4} bg='white' borderRadius='normal'
         boxShadow='card'>
         <h1>Phonebook</h1>
-        <Form onSubmit={addContact} />
+        <Form />
         <h2>Contacts</h2>
         <Filter value={filter} onChange={(event) => setFilter(event.target.value)} />      
-        <ContactList contacts={visibleContact} onDeleteContact={deleteContacts } />
+        <ContactList contacts={visibleContact} />
       </Box>
     
     )
