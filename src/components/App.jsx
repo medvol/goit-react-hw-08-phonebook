@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { nanoid } from 'nanoid'
-import { Box } from "./Box";
-import { Form } from "./ContactForm/ContactForm";
-import { ContactList } from "./ContactList/ContactList";
-import { Filter } from "./Filter/Filter";
+import { useSelector } from 'react-redux';
+
+import { Box } from './Box';
+import { Form } from './ContactForm/ContactForm';
+import { ContactList } from './ContactList/ContactList';
+import { Filter } from './Filter/Filter';
 
 const LS_KEY = 'contacts';
 const initialContacts = [
@@ -15,36 +14,46 @@ const initialContacts = [
 ];
 
 export const App = () => {
-    // const [contacts, setContacts] = useState(()=> JSON.parse(localStorage.getItem(LS_KEY)) ?? initialContacts);
-    const [filter, setFilter] = useState('');
+  // const [contacts, setContacts] = useState(()=> JSON.parse(localStorage.getItem(LS_KEY)) ?? initialContacts);
+  // const [filter, setFilter] = useState('');
 
-    // useEffect(() => {
-    //   localStorage.setItem(LS_KEY, JSON.stringify(contacts))
-      
-    // }, [contacts]);
-  
-  const contacts = useSelector(state => state.contacts); 
+  // useEffect(() => {
+  //   localStorage.setItem(LS_KEY, JSON.stringify(contacts))
 
-  const getVisibleContact = () => {    
+  // }, [contacts]);
+
+  const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
+
+  console.log(contacts);
+
+  console.log(filter);
+
+  const getVisibleContact = () => {
     const normalizeFilter = filter.toLowerCase();
-    return contacts.filter(contact => contact.name.toLowerCase().includes(normalizeFilter));
-  }
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizeFilter)
+    );
+  };
 
-
-   const visibleContact = getVisibleContact();
-
+  const visibleContact = getVisibleContact();
 
   return (
-      <Box width="30%" mt={3} mb={3} ml={6}
-        p={ 4} bg='white' borderRadius='normal'
-        boxShadow='card'>
-        <h1>Phonebook</h1>
-        <Form />
-        <h2>Contacts</h2>
-        <Filter value={filter} onChange={(event) => setFilter(event.target.value)} />      
-        <ContactList contacts={visibleContact} />
-      </Box>
-    
-    )
-  
-}
+    <Box
+      width="30%"
+      mt={3}
+      mb={3}
+      ml={6}
+      p={4}
+      bg="white"
+      borderRadius="normal"
+      boxShadow="card"
+    >
+      <h1>Phonebook</h1>
+      <Form />
+      <h2>Contacts</h2>
+      <Filter/>
+      <ContactList contacts={visibleContact} />
+    </Box>
+  );
+};
