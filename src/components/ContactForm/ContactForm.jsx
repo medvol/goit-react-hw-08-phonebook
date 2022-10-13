@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+
 import { useDispatch } from 'react-redux';
 import { addContact } from 'components/contactsSlice';
 import { Box } from 'components/Box';
@@ -53,6 +53,3 @@ export const Form = () => {
   );
 };
 
-Form.propTypes = {
-  onSubmit: PropTypes.func,
-};
