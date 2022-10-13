@@ -1,6 +1,5 @@
-
 import { useDispatch } from 'react-redux';
-import { addContact } from 'components/contactsSlice';
+import { addContact } from 'components/redux/contactsSlice';
 import { Box } from 'components/Box';
 import { LabelInput, FormInput, SubmitButton } from './ContactForm.styled';
 
@@ -52,4 +51,3 @@ export const Form = () => {
     </Box>
   );
 };
-

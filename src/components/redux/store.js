@@ -9,7 +9,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import { filterReducer } from './Filter/filterSlice';
+import { filterReducer } from './filterSlice';
 
 export const store = configureStore({
   reducer: {
