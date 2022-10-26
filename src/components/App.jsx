@@ -4,7 +4,7 @@ import { Box } from './Box';
 import { Form } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
-import { fetchContacts } from 'components/redux/operations';
+import { fetchContacts } from 'redux/contacts/operations';
 
 export const App = () => {
   const dispatch = useDispatch();
