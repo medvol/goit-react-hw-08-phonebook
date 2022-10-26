@@ -1,19 +1,21 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box } from './Box';
-import { Form } from './ContactForm/ContactForm';
-import { ContactList } from './ContactList/ContactList';
-import { Filter } from './Filter/Filter';
-import { fetchContacts } from 'redux/contacts/operations';
+import { PageRoutes } from './PageRoutes/PageRoutes';
+import { useAuth } from 'hooks/useAuth';
+import { refreshUser } from 'redux/auth/operations';
 
 export const App = () => {
   const dispatch = useDispatch();
+  const { isRefreshing } = useAuth();
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
-  
-  return (
+
+  return isRefreshing ? (
+    <b>Refreshing user...</b>
+  ) : (
     <Box
       width="30%"
       mt={3}
@@ -24,11 +26,7 @@ export const App = () => {
       borderRadius="normal"
       boxShadow="card"
     >
-      <h1>Phonebook</h1>
-      <Form />
-      <h2>Contacts</h2>
-      <Filter />
-      <ContactList />
+      <PageRoutes />
     </Box>
   );
 };
