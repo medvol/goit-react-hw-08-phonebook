@@ -5,7 +5,7 @@ import { addContact } from 'redux/contacts/operations';
 import { Box } from 'components/Box';
 import { LabelInput, FormInput, SubmitButton } from './ContactForm.styled';
 
-export const Form = () => {
+export const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
 
