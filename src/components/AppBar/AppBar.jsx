@@ -17,7 +17,15 @@ export const AppBarComponent = () => {
         borderRadius: 2,
       }}
     >
-      <Toolbar>
+      <Toolbar
+        sx={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 3,
+        }}
+      >
         <Navigation />
         {isLoggedIn ? <UserMenu /> : <AuthNav />}
       </Toolbar>

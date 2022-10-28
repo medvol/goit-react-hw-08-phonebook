@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts } from 'redux/contacts/selectors';
 import { addContact } from 'redux/contacts/operations';
 import { Box } from 'components/Box';
-import { LabelInput, FormInput, SubmitButton } from './ContactForm.styled';
+// import { LabelInput, FormInput, SubmitButton } from './ContactForm.styled';
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
@@ -40,23 +40,23 @@ export const ContactForm = () => {
       onSubmit={handleSubmit}
       as="form"
     >
-      <LabelInput htmlFor="name">Name</LabelInput>
-      <FormInput
+      <label htmlFor="name">Name</label>
+      <input
         type="text"
         name="name"
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         required
       />
-      <LabelInput htmlFor="number">Number</LabelInput>
-      <FormInput
+      <label htmlFor="number">Number</label>
+      <input
         type="tel"
         name="number"
         pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
         required
       />
-      <SubmitButton type="submit">Add contact</SubmitButton>
+      <button type="submit">Add contact</button>
     </Box>
   );
 };

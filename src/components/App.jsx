@@ -9,9 +9,16 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
+    primary: {
+      main: '#a5a7ac',
+    },
+
+    secondary: {
+      main: '#f57c00',
+    },
     background: {
       primary: '#2d354e',
-    secondary: '#1a2138',
+      secondary: '#1a2138',
     },
 
     text: {
@@ -39,8 +46,7 @@ export const App = () => {
       <Box
         sx={{
           bgcolor: 'background.secondary',
-          boxShadow: 1,
-          color: 'primary',
+          boxShadow: 1,          
           p: 2,
           minWidth: 1560,
         }}

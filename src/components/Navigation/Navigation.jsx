@@ -6,49 +6,44 @@ import { Link } from 'react-router-dom';
 import { useAuth } from 'hooks/useAuth';
 
 function LinkTab(props) {
-  return (
-    <Tab
-      component={Link}     
-      {...props}
-    />
-  );
+  return <Tab component={Link} {...props} />;
 }
 
 export const Navigation = () => {
   const [value, setValue] = useState('/');
   const { isLoggedIn } = useAuth();
 
-
-  const handleChange = (event, newValue) => {
+  const handleChange = (_, newValue) => {
     console.log(newValue);
     setValue(newValue);
   };
 
   return (
-    <Box component="nav" sx={{ width: '100%' }}>
+    <Box sx={{ ml: 'auto', mr: 18 }}>
       <Tabs
         value={value}
         onChange={handleChange}
-        selectionFollowsFocus
+        component="nav"
         aria-label="site navigation"
-        sx={{ justifyContent: 'end' }}
+        indicatorColor="secondary"
+        textColor="secondary"
       >
-        <LinkTab label="Home" value='/' to="/" />
-        {isLoggedIn && <LinkTab label="Contacts" value='/contacts' to="/contacts" />}
+        <LinkTab label="Home" value="/" to="/" sx={{ mr: 2 }} />
+        {isLoggedIn && (
+          <LinkTab label="Contacts" value="/contacts" to="/contacts" />
+        )}
       </Tabs>
     </Box>
   );
 };
 
-
-
 // export default function NavTabs() {
- 
+
 //   return (
-    
+
 //   );
 // }
 
 //  <nav>
-//       
+//
 //     </nav>
