@@ -4,13 +4,14 @@ import { useDispatch } from 'react-redux';
 import { PageRoutes } from './PageRoutes/PageRoutes';
 import { useAuth } from 'hooks/useAuth';
 import { refreshUser } from 'redux/auth/operations';
-import { Box} from '@mui/system';
+
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
     primary: {
       main: '#a5a7ac',
+      contrastText: '#eeeeef',
     },
 
     secondary: {
@@ -31,6 +32,8 @@ const theme = createTheme({
   },
 });
 
+
+
 export const App = () => {
   const dispatch = useDispatch();
   const { isRefreshing } = useAuth();
@@ -43,16 +46,7 @@ export const App = () => {
     <b>Refreshing user...</b>
   ) : (
     <ThemeProvider theme={theme}>
-      <Box
-        sx={{
-          bgcolor: 'background.secondary',
-          boxShadow: 1,          
-          p: 2,
-          minWidth: 1560,
-        }}
-      >
-        <PageRoutes />
-      </Box>
+      <PageRoutes />
     </ThemeProvider>
   );
 };

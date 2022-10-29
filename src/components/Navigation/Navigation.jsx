@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import { Box, Tabs, Tab } from '@mui/material';
+// import Tabs from '@mui/material/Tabs';
+// import Tab from '@mui/material/Tab';
 import { Link } from 'react-router-dom';
 import { useAuth } from 'hooks/useAuth';
 
@@ -36,14 +36,3 @@ export const Navigation = () => {
     </Box>
   );
 };
-
-// export default function NavTabs() {
-
-//   return (
-
-//   );
-// }
-
-//  <nav>
-//
-//     </nav>

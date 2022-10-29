@@ -14,15 +14,6 @@ import {
 } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-// import IconButton from '@mui/material/IconButton';
-// import Typography from '@mui/material/Typography';
-// import Menu from '@mui/material/Menu';
-
-// import Avatar from '@mui/material/Avatar';
-
-// import Tooltip from '@mui/material/Tooltip';
-// import MenuItem from '@mui/material/MenuItem';
-
 export const UserMenu = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const dispatch = useDispatch();
@@ -87,7 +78,9 @@ export const UserMenu = () => {
         type="button"
         onClick={() => dispatch(logOut())}
       >
-        <Typography variant='body2' component='span'>LogOut</Typography>
+        <Typography variant="body2" component="span">
+          LogOut
+        </Typography>
       </Button>
     </Box>
   );
