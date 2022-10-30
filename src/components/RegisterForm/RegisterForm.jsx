@@ -44,6 +44,7 @@ export const RegisterForm = () => {
           id="outlined-name"
           label="Your name*"
           type="text"
+          name='name'
           color="secondary"
           size="normal"
           sx={{
@@ -66,7 +67,8 @@ export const RegisterForm = () => {
         <TextField
           id="outlined-email"
           label="Email*"
-          type="text"
+          type="email"
+          name='email'
           color="secondary"
           size="normal"
           sx={{
@@ -90,6 +92,7 @@ export const RegisterForm = () => {
           id="outlined-password-input"
           label="Password*"
           type="password"
+          name='password'
           autoComplete="current-password"
           color="secondary"
           size="normal"

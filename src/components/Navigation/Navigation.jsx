@@ -6,7 +6,17 @@ import { Link } from 'react-router-dom';
 import { useAuth } from 'hooks/useAuth';
 
 function LinkTab(props) {
-  return <Tab component={Link} {...props} />;
+  return (
+    <Tab
+      component={Link}
+      {...props}
+      sx={{
+        '&:hover': {
+          color: 'secondary.main',
+        },
+      }}
+    />
+  );
 }
 
 export const Navigation = () => {
