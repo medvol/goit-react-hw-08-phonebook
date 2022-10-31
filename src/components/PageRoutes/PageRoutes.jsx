@@ -17,7 +17,10 @@ export const PageRoutes = () => {
         <Route
           path="/register"
           element={
-            <RestrictedRoute redirectTo="/contacts" component={<RegisterPage />} />
+            <RestrictedRoute
+              redirectTo="/contacts"
+              component={<RegisterPage />}
+            />
           }
         />
         <Route
@@ -26,12 +29,24 @@ export const PageRoutes = () => {
             <RestrictedRoute redirectTo="/contacts" component={<LoginPage />} />
           }
         />
-        <Route
-          path="/contacts"
-          element={
-            <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
-          }
-        />
+        <Route path="*" element={<div>Not Found</div>} />
+      </Route>
+      <Route
+        path="/contacts"
+        element={
+          <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
+        }
+      >
+        <Route index element={<div>allcontacts</div>} />
+        <Route path="addcontact" element={<div>addcontacts</div>} />
+        <Route path="favorites" element={<div>favorites</div>} />
+        
+          <Route path="coworkers" element={<div>coWorkers</div>} />
+          <Route path="family" element={<div>family</div>} />
+          <Route path="friends" element={<div>friends</div>} />
+          <Route path="other" element={<div>others</div>} />
+       
+        <Route path="*" element={<div>Not Found</div>} />
       </Route>
     </Routes>
   );

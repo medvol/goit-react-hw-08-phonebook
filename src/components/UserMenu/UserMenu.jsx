@@ -41,9 +41,6 @@ export const UserMenu = () => {
         gap: 2,
       }}
     >
-      <Typography variant="body2" component="p" color="secondary">
-        Welcome, {user.name}
-      </Typography>
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open settings">
           <IconButton aria-describedby={id} onClick={handleClick} sx={{ p: 0 }}>
@@ -84,46 +81,18 @@ export const UserMenu = () => {
           </List>
         </Popover>
       </Box>
+      <Typography variant="body2" component="p" color="secondary">
+        Welcome, {user.name}!
+      </Typography>
 
       <Button
-        variant="outlined"
+        variant="text"
         color="secondary"
-        size="small"
+        size="large"
         startIcon={<LogoutIcon />}
         type="button"
         onClick={() => dispatch(logOut())}
-      >
-        <Typography
-          variant="body2"
-          component="span"
-          sx={{ textTransform: 'none' }}
-        >
-          Logout
-        </Typography>
-      </Button>
+      ></Button>
     </Box>
   );
 };
-
-//  <Menu
-//    sx={{ mt: '58px', bgcolor: 'background.primary', color: 'secondary' }}
-//    id="menu-appbar"
-//    anchorEl={anchorElUser}
-//    anchorOrigin={{
-//      vertical: 'top',
-//      horizontal: 'right',
-//    }}
-//    keepMounted
-//    transformOrigin={{
-//      vertical: 'top',
-//      horizontal: 'right',
-//    }}
-//    open={Boolean(anchorElUser)}
-//    onClose={handleCloseUserMenu}
-//  >
-//  {settings.map(setting => (
-//    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-//      <Typography textAlign="center">{setting}</Typography>
-//    </MenuItem>
-//  ))}
-//  </Menu>;
