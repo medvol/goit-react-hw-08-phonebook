@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Typography, Box, Button, Container } from '@mui/material';
-import imagePhone from 'assets/phone.jpg';
+import imagePhone from 'assets/phone.png';
 import { Holder } from './Hero.styled';
-import PropTypes from 'prop-types';
 import { textAnimation } from 'services/mainPageAnimation';
 
 export default function Hero() {

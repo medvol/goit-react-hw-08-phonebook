@@ -44,7 +44,7 @@ export const RegisterForm = () => {
           id="outlined-name"
           label="Your name*"
           type="text"
-          name='name'
+          name="name"
           color="secondary"
           size="normal"
           sx={{
@@ -68,7 +68,7 @@ export const RegisterForm = () => {
           id="outlined-email"
           label="Email*"
           type="email"
-          name='email'
+          name="email"
           color="secondary"
           size="normal"
           sx={{
@@ -92,7 +92,7 @@ export const RegisterForm = () => {
           id="outlined-password-input"
           label="Password*"
           type="password"
-          name='password'
+          name="password"
           autoComplete="current-password"
           color="secondary"
           size="normal"
@@ -133,7 +133,7 @@ export const RegisterForm = () => {
           variant="contained"
           color="secondary"
           type="submit"
-          sx={{ textTransform: 'none', color: 'text.primary' }}
+          sx={{ textTransform: 'none', color: 'text.primary', boxShadow: 3 }}
         >
           Sign Up
         </Button>

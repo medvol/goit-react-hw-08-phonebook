@@ -44,7 +44,7 @@ export const LoginForm = () => {
           id="outlined-email"
           label="Email*"
           type="email"
-          name='email'
+          name="email"
           color="secondary"
           size="normal"
           sx={{
@@ -68,7 +68,7 @@ export const LoginForm = () => {
           id="outlined-password-input"
           label="Password*"
           type="password"
-          name='password'
+          name="password"
           autoComplete="current-password"
           color="secondary"
           size="normal"
@@ -109,7 +109,7 @@ export const LoginForm = () => {
           variant="contained"
           color="secondary"
           type="submit"
-          sx={{ textTransform: 'none', color: 'text.primary' }}
+          sx={{ textTransform: 'none', color: 'text.primary', boxShadow: 3 }}
         >
           Login
         </Button>

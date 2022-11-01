@@ -7,13 +7,12 @@ import {
   IconButton,
   Typography,
   Tooltip,
-  Button,
   Popover,
   List,
   ListItem,
 } from '@mui/material';
 import UserAvatar from 'components/UserAvatar/UserAvatar';
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogOutButton from 'components/LogOutButton/LogOutButton';
 
 export const UserMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -85,14 +84,7 @@ export const UserMenu = () => {
         Welcome, {user.name}!
       </Typography>
 
-      <Button
-        variant="text"
-        color="secondary"
-        size="large"
-        startIcon={<LogoutIcon />}
-        type="button"
-        onClick={() => dispatch(logOut())}
-      ></Button>
+      <LogOutButton onClick={() => dispatch(logOut())} />
     </Box>
   );
 };

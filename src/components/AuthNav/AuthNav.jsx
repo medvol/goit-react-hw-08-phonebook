@@ -16,6 +16,7 @@ export const AuthNav = () => {
         sx={{
           color: 'text.primary',
           textTransform: 'none',
+          boxShadow: 3,
           '&:hover': {
             backgroundColor: 'rgb(230, 81, 0)',
           },
