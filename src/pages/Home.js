@@ -1,4 +1,3 @@
-import {  Container } from '@mui/material';
 import Hero from 'components/Hero/Hero';
 import Footer from 'components/Footer/Footer';
 

@@ -11,12 +11,13 @@ export default function NavBarContacts() {
     <Box
       component="aside"
       sx={{
-        height: '100vh',
         width: 260,
+        
         display: 'flex',
         flexDirection: 'column',
         bgcolor: 'background.primary',
         p: 3,
+        pb:10,
         borderRadius: 2,
         boxShadow: 3,
       }}
