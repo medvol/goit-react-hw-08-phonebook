@@ -21,7 +21,7 @@ export default function ContactForm() {
 
   const onChangeErrorPhone = event => {
     const regex =
-      "\+?d{1,4}?[-.s]?(?d{1,3}?)?[-.s]?d{1,4}[-.s]?d{1,4}[-.s]?d{1,9}";
+      "+?d{1,4}?[-.s]?(?d{1,3}?)?[-.s]?d{1,4}[-.s]?d{1,4}[-.s]?d{1,9}";
     if (event.target.value !== regex) setErrorPhone(true);
   };
 

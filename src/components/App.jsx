@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 // import { Box } from './Box';
 import { PageRoutes } from './PageRoutes/PageRoutes';
@@ -8,6 +8,7 @@ import { refreshUser } from 'redux/auth/operations';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
+
   palette: {
     primary: {
       main: '#a5a7ac',
@@ -45,8 +46,10 @@ export const App = () => {
   return isRefreshing ? (
     <b>Refreshing user...</b>
   ) : (
-    <ThemeProvider theme={theme}>
-      <PageRoutes />
-    </ThemeProvider>
+    <Suspense fallback={null}>
+      <ThemeProvider theme={theme}>
+        <PageRoutes />
+      </ThemeProvider>
+    </Suspense>
   );
 };

@@ -4,6 +4,7 @@ import { Layout } from 'components/Layout';
 import { PrivateRoute } from 'components/PrivateRoute';
 import { RestrictedRoute } from 'components/RestrictedRoute';
 import ContactForm from 'components/ContactForm/ContactForm';
+import AllContacts from 'components/Contacts/AllContacts/AllContacts';
 
 const HomePage = lazy(() => import('pages/Home'));
 const RegisterPage = lazy(() => import('pages/Register'));
@@ -39,7 +40,7 @@ export const PageRoutes = () => {
         }
       >
         
-        <Route index element={<div>allcontacts</div>} />
+        <Route index element={<AllContacts/>} />
            <Route
         path="addcontact"
         element={
