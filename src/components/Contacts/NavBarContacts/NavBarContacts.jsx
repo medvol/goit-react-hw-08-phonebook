@@ -11,8 +11,7 @@ export default function NavBarContacts() {
     <Box
       component="aside"
       sx={{
-        width: 260,
-        
+        width: 260,        
         display: 'flex',
         flexDirection: 'column',
         bgcolor: 'background.primary',

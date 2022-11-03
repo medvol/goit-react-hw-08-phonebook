@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Typography, Box, Button, Container } from '@mui/material';
+import { Typography, Box, Button, Container, Grow } from '@mui/material';
 import imagePhone from 'assets/phone.png';
-import { Holder } from './Hero.styled';
 import { textAnimation } from 'services/mainPageAnimation';
 
 export default function Hero() {
@@ -24,7 +23,7 @@ export default function Hero() {
       }}
     >
       {animationBox && (
-        <Holder
+        <Box
           sx={{
             animation: `${textAnimation} 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`,
           }}
@@ -65,18 +64,26 @@ export default function Hero() {
           >
             Get Started
           </Button>
-        </Holder>
+        </Box>
       )}
 
-      <Box
-        component="img"
-        sx={{
-          width: '50%',
-        }}
-        alt="phone"
-        src={imagePhone}
-        loading="lazy"
-      />
+      <Grow
+        easing="cubic-bezier(0.37, 0, 0.63, 1)"
+        style={{ transformOrigin: '0 0 0' }}
+        timeout={3000}
+       
+        in
+      >
+        <Box
+          component="img"
+          sx={{
+            width: '50%',
+          }}
+          alt="phone"
+          src={imagePhone}
+          loading="lazy"
+        />
+      </Grow>
     </Container>
   );
 }

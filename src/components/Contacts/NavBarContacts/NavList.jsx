@@ -5,8 +5,7 @@ import {
   List,
   ListItemButton,
   ListItemIcon,
-  ListItemText,
-  
+  ListItemText,  
   Collapse,
 } from '@mui/material';
 import ExpandLess from '@mui/icons-material/ExpandLess';
@@ -19,7 +18,7 @@ import Diversity3Icon from '@mui/icons-material/Diversity3';
 import HailIcon from '@mui/icons-material/Hail';
 
 export default function NavList() {
-  const [selectedIndex, setSelectedIndex] = useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [open, setOpen] = useState(true);
 
   const handleClick = () => {
