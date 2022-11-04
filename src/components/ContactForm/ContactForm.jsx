@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import * as yup from 'yup';
 import { selectContacts } from 'redux/contacts/selectors';
 import { addContact } from 'redux/contacts/operations';
 import { Box, TextField, Button, Typography } from '@mui/material';
@@ -11,40 +13,51 @@ import FormHelperText from '@mui/material/FormHelperText';
 export default function ContactForm() {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-  const [errorName, setErrorName] = useState(false);
-  const [errorPhone, setErrorPhone] = useState(false);
+  const [error, setError] = useState(false);
 
-  const onChangeErrorName = event => {
-    const regex = "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$";
-    if(event.target.value !== regex) setErrorName(true);
-  }
+  const navigate = useNavigate();
 
-  const onChangeErrorPhone = event => {
-    const regex =
-      "+?d{1,4}?[-.s]?(?d{1,3}?)?[-.s]?d{1,4}[-.s]?d{1,4}[-.s]?d{1,9}";
-    if (event.target.value !== regex) setErrorPhone(true);
-  };
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
-  const handleSubmit = event => {
+  let schema = yup.object().shape({
+    name: yup
+      .string()
+      .required()
+      .matches(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/)
+      .trim(),
+    number: yup
+      .string()
+      .matches(phoneRegExp, 'Phone number is not valid')
+      .nullable(),
+  });
+
+  const handleSubmit = async event => {
     event.preventDefault();
-    setErrorName(false);
-    setErrorPhone(false);
+    setError(false);
+
     const form = event.currentTarget;
     const { name, number } = form;
     const contact = {
       name: name.value,
       number: number.value,
     };
+    try {
+      const validateContact = await schema.validate(contact);
 
-    const duplicateContact = contacts.find(
-      contact => contact.name.toLowerCase() === name.value.toLowerCase()
-    );
+      const duplicateContact = contacts.find(
+        contact => contact.name.toLowerCase() === name.value.toLowerCase()
+      );
 
-    if (duplicateContact)
-      return window.alert(`${name.value} is already in contacts`);
+      if (duplicateContact)
+        return window.alert(`${name.value} is already in contacts`);
 
-    dispatch(addContact(contact));
-    form.reset();
+      dispatch(addContact(validateContact));
+      navigate('/contacts');
+      form.reset();
+    } catch (error) {
+      setError(true);
+    }
   };
 
   return (
@@ -107,13 +120,13 @@ export default function ContactForm() {
           label="Your name"
           type="text"
           name="name"
-          error={errorName}
-          onChange={onChangeErrorName}
+          error={error}
+          // onChange={onChangeErrorName}
           required
           variant="standard"
         />
-        {errorName && (
-          <FormHelperText error={errorName} sx={{ pl: 1,}}>
+        {error && (
+          <FormHelperText error={error} sx={{ pl: 1 }}>
             Name may contain only letters, apostrophe, dash and spaces.
           </FormHelperText>
         )}
@@ -122,15 +135,15 @@ export default function ContactForm() {
           label="Phone number"
           type="tel"
           name="number"
-          error={errorPhone}
-          onChange={onChangeErrorPhone}
+          error={error}
+          // onChange={onChangeErrorPhone}
           required
           variant="standard"
         />
-        {errorPhone && (
-          <FormHelperText error={errorPhone} sx={{ pl: 1 }}>
-            Phone number must be digits and can contain spaces, dashes,
-            parentheses and can start with +
+        {error && (
+          <FormHelperText error={error} sx={{ pl: 1 }}>
+            Phone number must be digits and can't contain spaces, dashes and
+            more 10 digits
           </FormHelperText>
         )}
 

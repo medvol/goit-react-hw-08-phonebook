@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 // import { Loader } from 'components/Loader/Loader';
 // import { deleteContact } from 'redux/contacts/operations';
@@ -8,17 +8,17 @@ import {
   selectError,
   selectVisibleContacts,
 } from 'redux/contacts/selectors';
-import { useGridApiRef, DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import { useGridApiRef, DataGrid } from '@mui/x-data-grid';
 import { Box, Button, Fade } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 import HomeIcon from '@mui/icons-material/Home';
-import { deleteContact } from 'redux/contacts/operations';
 import { CustomColumnMenuComponent } from './CustomColumnMenuComponent';
 import LinearProgress from '@mui/material/LinearProgress';
 import { Filter } from 'components/Filter/Filter';
+import ActionsButtonDelete from './ActionsButtonDelete';
+import ActionsButtonEdit from './ActionsButtonEdit';
 
 export default function AllContacts() {
-  const dispatch = useDispatch();
+
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const contacts = useSelector(selectVisibleContacts);
@@ -69,12 +69,8 @@ export default function AllContacts() {
                   width: 150,
                   type: 'actions',
                   getActions: params => [
-                    <GridActionsCellItem
-                      icon={<DeleteIcon />}
-                      label="Delete"
-                      color="primary"
-                      onClick={() => dispatch(deleteContact(params.id))}
-                    />,
+                    <ActionsButtonDelete id={params.id} />,
+                    <ActionsButtonEdit id={params.id} />,
                   ],
                 },
               ]}
