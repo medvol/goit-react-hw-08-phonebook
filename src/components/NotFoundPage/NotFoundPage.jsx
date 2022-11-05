@@ -48,7 +48,6 @@ export default function NotFoundPage() {
             color: 'text.primary',
           }}
         >
-         
           Back home
         </Button>
       </Box>

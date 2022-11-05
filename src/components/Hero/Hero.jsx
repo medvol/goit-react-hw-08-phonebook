@@ -1,16 +1,8 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Typography, Box, Button, Container, Fade } from '@mui/material';
 import imagePhone from 'assets/phone.png';
-import { textAnimation } from 'services/mainPageAnimation';
 
 export default function Hero() {
-  const [animationBox, setAnimationBox] = useState(false);
-
-  useEffect(() => {
-    setAnimationBox(true);
-  }, []);
-
   return (
     <Container
       component="main"
@@ -22,11 +14,9 @@ export default function Hero() {
         color: 'text.primary',
       }}
     >
-      {animationBox && (
+     
         <Fade in timeout={3000} easing="cubic-bezier(0.37, 0, 0.63, 1)">
-          <Box
-          
-          >
+          <Box>
             <Typography variant="h3" component="h1" sx={{ fontWeight: 700 }}>
               {' '}
               Discover the&nbsp;
@@ -65,9 +55,9 @@ export default function Hero() {
             </Button>
           </Box>
         </Fade>
-      )}
+     
 
-     <Fade in timeout={5500} easing="cubic-bezier(0.37, 0, 0.63, 1)">
+      <Fade in timeout={5500} easing="cubic-bezier(0.37, 0, 0.63, 1)">
         <Box
           component="img"
           sx={{

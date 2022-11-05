@@ -17,44 +17,25 @@ export const PageRoutes = () => {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route
-          path="/register"
-          element={
-            <RestrictedRoute
-              redirectTo="/contacts"
-              component={<RegisterPage />}
-            />
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <RestrictedRoute redirectTo="/contacts" component={<LoginPage />} />
-          }
-        />
-        <Route path="*" element={<NotFoundPage />} />
-      </Route>
-      <Route
-        path="/contacts"
-        element={
-          <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
-        }
-      >
-        <Route index element={<AllContacts />} />
-        <Route
-          path="addcontact"
-          element={
-            <PrivateRoute redirectTo="/login" component={<ContactForm />} />
-          }
-        />
-
-        <Route path="favorites" element={<div>favorites</div>} />
-        <Route path="coworkers" element={<div>coWorkers</div>} />
-        <Route path="family" element={<div>family</div>} />
-        <Route path="friends" element={<div>friends</div>} />
-        <Route path="other" element={<div>others</div>} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route element={<RestrictedRoute redirectTo="/contacts" />}>
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+        <Route element={<PrivateRoute redirectTo="/login" />}>
+          <Route path="/contacts" element={<ContactsPage />}>
+            <Route index element={<AllContacts />} />
+            <Route path="addcontact" element={ <ContactForm/>} />
+            <Route path="favorites" element={<div>favorites</div>} />
+            <Route path="coworkers" element={<div>coWorkers</div>} />
+            <Route path="family" element={<div>family</div>} />
+            <Route path="friends" element={<div>friends</div>} />
+            <Route path="other" element={<div>others</div>} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+        </Route>
       </Route>
     </Routes>
   );
 };
+

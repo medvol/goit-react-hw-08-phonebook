@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Box, Tabs, Tab } from '@mui/material';
-// import Tabs from '@mui/material/Tabs';
-// import Tab from '@mui/material/Tab';
 import { Link } from 'react-router-dom';
 import { useAuth } from 'hooks/useAuth';
 

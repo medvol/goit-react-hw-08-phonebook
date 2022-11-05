@@ -31,7 +31,7 @@ function stringAvatar(name) {
   };
 }
 
-export default function UserAvatar({sx}) {
+export default function UserAvatar({ sx }) {
   const { user } = useAuth();
   return (
     <Stack direction="row" spacing={2}>

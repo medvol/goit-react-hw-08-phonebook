@@ -43,9 +43,6 @@ export default function Contacts() {
           </Box>
           <Outlet />
         </Box>
-
-        {/* <ContactForm />
-      <ContactList /> */}
       </Box>
     
   );

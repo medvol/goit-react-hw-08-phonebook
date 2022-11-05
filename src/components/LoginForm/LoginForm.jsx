@@ -3,7 +3,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Box, TextField, Typography, Link, Button } from '@mui/material';
 import { logIn } from 'redux/auth/operations';
 
-
 export const LoginForm = () => {
   const dispatch = useDispatch();
 
@@ -129,6 +128,3 @@ export const LoginForm = () => {
     </Box>
   );
 };
-
-
- 

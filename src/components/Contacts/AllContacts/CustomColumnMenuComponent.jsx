@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import { GridFilterMenuItem, SortGridMenuItems } from '@mui/x-data-grid';
-
-
-import{StyledGridColumnMenuContainer, StyledGridColumnMenu} from './AllContacts.styled'
+import {
+  StyledGridColumnMenuContainer,
+  StyledGridColumnMenu,
+} from './AllContacts.styled';
 
 function CustomColumnMenuComponent(props) {
   const { hideMenu, currentColumn, color, ...other } = props;
@@ -44,7 +45,7 @@ function CustomColumnMenuComponent(props) {
 }
 
 CustomColumnMenuComponent.propTypes = {
-//   color: PropTypes.oneOf(['primary', 'secondary']).isRequired,
+  //   color: PropTypes.oneOf(['primary', 'secondary']).isRequired,
   currentColumn: PropTypes.object.isRequired,
   hideMenu: PropTypes.func.isRequired,
 };

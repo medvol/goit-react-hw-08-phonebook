@@ -1,8 +1,5 @@
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-// import { Loader } from 'components/Loader/Loader';
-// import { deleteContact } from 'redux/contacts/operations';
-// import { ContactListItem, ContactDeleteButton } from './ContactList.styled';
 import {
   selectIsLoading,
   selectError,
