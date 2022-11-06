@@ -1,61 +1,63 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import * as yup from 'yup';
 import { selectContacts } from 'redux/contacts/selectors';
 import { addContact } from 'redux/contacts/operations';
 import { Box, TextField, Button, Typography } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import FormHelperText from '@mui/material/FormHelperText';
+import { useForm, Controller } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
+import CustomizedSnackbar from 'components/SnackBar/SnackBar';
 
 export default function ContactForm() {
+  const [isOpenNotification, setIsOpenNotification] = useState(false);
+  const [severityNotification, setSeverityNotification] = useState('');
+  const [messageNotification, setMessageNotification] = useState('');
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-  const [error, setError] = useState(false);
 
   const navigate = useNavigate();
 
-  const phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-
-  let schema = yup.object().shape({
-    name: yup
-      .string()
-      .required()
-      .matches(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/)
-      .trim(),
-    number: yup
-      .string()
-      .matches(phoneRegExp, 'Phone number is not valid')
-      .nullable(),
+  const {
+    handleSubmit,
+    control,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm({
+    criteriaMode: 'all',
   });
 
-  const handleSubmit = async event => {
-    event.preventDefault();
-    setError(false);
-
-    const form = event.currentTarget;
-    const { name, number } = form;
+  const onSubmit = data => {
+    const { name, number } = data;
     const contact = {
-      name: name.value,
-      number: number.value,
+      name,
+      number,
     };
-    try {
-      const validateContact = await schema.validate(contact);
+    console.log(contact)
 
-      const duplicateContact = contacts.find(
-        contact => contact.name.toLowerCase() === name.value.toLowerCase()
-      );
+    const duplicateContact = contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
 
-      if (duplicateContact)
-        return window.alert(`${name.value} is already in contacts`);
-
-      dispatch(addContact(validateContact));
-      navigate('/contacts');
-      form.reset();
-    } catch (error) {
-      setError(true);
+    if (duplicateContact) {
+      setIsOpenNotification(true);
+      setSeverityNotification('error');
+      setMessageNotification(`${name} is already in contacts`);
+      return
     }
+      
+    // return window.alert(`${name.value} is already in contacts`);
+
+    dispatch(addContact(contact));
+    setIsOpenNotification(true);
+    setSeverityNotification('success');
+    setMessageNotification(`${name} add to PhoneBook`);
+    console.log(isOpenNotification, severityNotification, messageNotification)
+    navigate('/contacts');
+    
+    
+    reset();
   };
 
   return (
@@ -103,7 +105,7 @@ export default function ContactForm() {
       <Box
         component="form"
         noValidate
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         sx={{
           '& .MuiTextField-root': { m: 1, width: '90%' },
           width: '100%',
@@ -113,37 +115,92 @@ export default function ContactForm() {
         }}
         autoComplete="off"
       >
-        <TextField
-          id="standard-name"
-          label="Your name"
-          type="text"
+        <Controller
           name="name"
-          error={error}
-          // onChange={onChangeErrorName}
-          required
-          variant="standard"
+          defaultValue=""
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <TextField
+              id="standard-name"
+              name="name"
+              label="Your name"
+              type="text"
+              required
+              variant="standard"
+              {...register('name', {
+                required: 'Name is required',
+                pattern: {
+                  value:
+                    /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
+                  message:
+                    'Name may contain only letters, apostrophe, dash and spaces.',
+                },
+                minLength: {
+                  value: 3,
+                  message: 'Name must exceed 3 characters',
+                },
+              })}
+              {...field}
+            />
+          )}
         />
-        {error && (
-          <FormHelperText error={error} sx={{ pl: 1 }}>
-            Name may contain only letters, apostrophe, dash and spaces.
-          </FormHelperText>
-        )}
-        <TextField
-          id="standard-phone"
-          label="Phone number"
-          type="tel"
+        <ErrorMessage
+          errors={errors}
+          name="name"
+          render={({ messages }) => {
+            console.log('messages', messages);
+            return messages
+              ? Object.entries(messages).map(([type, message]) => (
+                  <p style={{ color: 'red' }} key={type}>
+                    {message}
+                  </p>
+                ))
+              : null;
+          }}
+        />
+
+        <Controller
           name="number"
-          error={error}
-          // onChange={onChangeErrorPhone}
-          required
-          variant="standard"
+          defaultValue=""
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <TextField
+              label="Phone number"
+              type="tel"
+              name="number"
+              required
+              variant="standard"
+              {...register('number', {
+                required: 'Phone number is required',
+                pattern: {
+                  value:
+                    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+                  message: 'Phone number must be digits',
+                },
+                minLength: {
+                  value: 10,
+                  message: 'Phone must exceed 10 characters',
+                },
+              })}
+              {...field}
+            />
+          )}
         />
-        {error && (
-          <FormHelperText error={error} sx={{ pl: 1 }}>
-            Phone number must be digits and can't contain spaces, dashes and
-            more 10 digits
-          </FormHelperText>
-        )}
+        <ErrorMessage
+          errors={errors}
+          name="number"
+          render={({ messages }) => {
+            return messages
+              ? Object.entries(messages).map(([type, message]) => (
+                  <p style={{ color: 'red' }} key={type}>
+                    {message}
+                  </p>
+                ))
+              : null;
+          }}
+        />
 
         <Button
           variant="contained"
@@ -162,6 +219,7 @@ export default function ContactForm() {
           Create
         </Button>
       </Box>
+      <CustomizedSnackbar isOpen={isOpenNotification} severity={severityNotification} message={messageNotification} />
     </Box>
   );
 }
