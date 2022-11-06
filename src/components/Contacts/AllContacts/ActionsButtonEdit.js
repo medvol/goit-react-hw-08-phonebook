@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import * as yup from 'yup';
 import {
   Box,
   TextField,
-  FormHelperText,
   Button,
   IconButton,
   Tooltip,
@@ -15,27 +13,14 @@ import {
 } from '@mui/material';
 import { editContact } from 'redux/contacts/operations';
 import EditIcon from '@mui/icons-material/Edit';
+import { useForm, Controller } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { ErrorMessage } from '@hookform/error-message';
 
 export default function ActionsButtonEdit({ id }) {
   const [open, setOpen] = useState(false);
-  const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
-
-  const phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-
-  let schema = yup.object().shape({
-    name: yup
-      .string()
-      .required()
-      .matches(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/)
-      .trim(),
-    number: yup
-      .string()
-      .matches(phoneRegExp, 'Phone number is not valid')
-      .nullable(),
-  });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -45,28 +30,30 @@ export default function ActionsButtonEdit({ id }) {
     setOpen(false);
   };
 
-  const handleSubmit = async event => {
-    event.preventDefault();
-    setError(false);
-    const form = event.currentTarget;
-    const { name, number } = form;
+  const {
+    handleSubmit,
+    control,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm({
+    criteriaMode: 'all',
+  });
 
+  const onSubmit = data => {
+    const { name, number } = data;
     const contact = {
       id,
-      name: name.value,
-      number: number.value,
+      name,
+      number,
     };
 
-    try {
-      const validateContact = await schema.validate(contact);
+    dispatch(editContact(contact));
+    toast.success(`${name} successfully edit`);
 
-      dispatch(editContact(validateContact));
-
-      form.reset();
-    } catch (error) {
-      setError(true);
-    }
+    reset();
   };
+
   return (
     <>
       <Tooltip title="Edit" TransitionComponent={Zoom}>
@@ -93,7 +80,7 @@ export default function ActionsButtonEdit({ id }) {
         <Box
           component="form"
           noValidate
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           sx={{
             '& .MuiTextField-root': { m: 1, width: '90%' },
             width: '100%',
@@ -105,38 +92,91 @@ export default function ActionsButtonEdit({ id }) {
           autoComplete="off"
         >
           <DialogContent sx={{ backgroundColor: 'background.primary' }}>
-            <TextField
-              id="standard-name"
-              label="Your name"
-              type="text"
+            <Controller
               name="name"
-              //   value={contactValue.name}
-              error={error}
-              //   onChange={onChangeContact}
-
-              variant="standard"
+              defaultValue=""
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <TextField
+                  id="standard-name"
+                  name="name"
+                  label="Your name"
+                  type="text"
+                  required
+                  variant="standard"
+                  {...register('name', {
+                    required: 'Name is required',
+                    pattern: {
+                      value:
+                        /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
+                      message:
+                        'Name may contain only letters, apostrophe, dash and spaces.',
+                    },
+                    minLength: {
+                      value: 3,
+                      message: 'Name must exceed 3 characters',
+                    },
+                  })}
+                  {...field}
+                />
+              )}
             />
-            {error && (
-              <FormHelperText error={error} sx={{ pl: 1 }}>
-                Name may contain only letters, apostrophe, dash and spaces.
-              </FormHelperText>
-            )}
-            <TextField
-              id="standard-phone"
-              label="Phone number"
-              type="tel"
+            <ErrorMessage
+              errors={errors}
+              name="name"
+              render={({ messages }) => {
+                return messages
+                  ? Object.entries(messages).map(([type, message]) => (
+                      <p style={{ color: 'red' }} key={type}>
+                        {message}
+                      </p>
+                    ))
+                  : null;
+              }}
+            />
+
+            <Controller
               name="number"
-              //   value={contactValue.number}
-              error={error}
-              variant="standard"
+              defaultValue=""
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <TextField
+                  label="Phone number"
+                  type="tel"
+                  name="number"
+                  required
+                  variant="standard"
+                  {...register('number', {
+                    required: 'Phone number is required',
+                    pattern: {
+                      value:
+                        /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+                      message: 'Phone number must be digits',
+                    },
+                    minLength: {
+                      value: 10,
+                      message: 'Phone must exceed 10 characters',
+                    },
+                  })}
+                  {...field}
+                />
+              )}
             />
-            {error && (
-              <FormHelperText error={error} sx={{ pl: 1 }}>
-                Phone number must be digits and can contain spaces, dashes,
-                parentheses and can start with +
-              </FormHelperText>
-            )}
-
+            <ErrorMessage
+              errors={errors}
+              name="number"
+              render={({ messages }) => {
+                return messages
+                  ? Object.entries(messages).map(([type, message]) => (
+                      <p style={{ color: 'red' }} key={type}>
+                        {message}
+                      </p>
+                    ))
+                  : null;
+              }}
+            />
             <Button
               variant="contained"
               color="secondary"

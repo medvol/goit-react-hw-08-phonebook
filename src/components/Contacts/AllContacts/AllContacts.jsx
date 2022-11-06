@@ -1,35 +1,36 @@
 import { useSelector } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import {
   selectIsLoading,
   selectError,
   selectVisibleContacts,
 } from 'redux/contacts/selectors';
 import { useGridApiRef, DataGrid } from '@mui/x-data-grid';
-import { Box, Button, Fade } from '@mui/material';
+import { Box, Button, Fade, LinearProgress } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import { CustomColumnMenuComponent } from './CustomColumnMenuComponent';
-import LinearProgress from '@mui/material/LinearProgress';
 import { Filter } from 'components/Filter/Filter';
 import ActionsButtonDelete from './ActionsButtonDelete';
 import ActionsButtonEdit from './ActionsButtonEdit';
+import { Loader } from 'components/Loader/Loader';
 
 export default function AllContacts() {
-
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const contacts = useSelector(selectVisibleContacts);
+  const location = useLocation();
 
   const apiRef = useGridApiRef();
 
   return (
     <Box>
-      <Fade in timeout={1000} easing="cubic-bezier(0.37, 0, 0.63, 1)">
+      <Fade in timeout={750} easing="cubic-bezier(0.37, 0, 0.63, 1)">
         <Box>
           <Button
             variant="outlined"
             component={RouterLink}
             to="/"
+            state={{ from: location }}
             color="secondary"
             size="small"
             sx={{
@@ -53,8 +54,9 @@ export default function AllContacts() {
       </Fade>
 
       {error && <div>Something went wrong...</div>}
+      {isLoading && <Loader/>}
       {!isLoading && !error && (
-        <Fade in timeout={1000} easing="cubic-bezier(0.37, 0, 0.63, 1)">
+        <Fade in timeout={1200} easing="cubic-bezier(0.37, 0, 0.63, 1)">
           <Box sx={{ width: '100%', height: 500, mt: 5 }}>
             <DataGrid
               apiRef={apiRef}

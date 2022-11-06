@@ -3,6 +3,7 @@ import { Avatar, Stack } from '@mui/material';
 import { useAuth } from 'hooks/useAuth';
 
 function stringToColor(string) {
+  
   let hash = 0;
   let i;
 
@@ -31,11 +32,13 @@ function stringAvatar(name) {
   };
 }
 
-export default function UserAvatar({ sx }) {
+export default function UserAvatar() {
   const { user } = useAuth();
+  
   return (
+    
     <Stack direction="row" spacing={2}>
-      <Avatar {...stringAvatar(user.name)} />
+      <Avatar {...stringAvatar(user?.name)} />
     </Stack>
   );
 }

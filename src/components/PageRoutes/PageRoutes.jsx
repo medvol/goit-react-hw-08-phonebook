@@ -20,21 +20,21 @@ export const PageRoutes = () => {
         <Route element={<RestrictedRoute redirectTo="/contacts" />}>
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-        <Route element={<PrivateRoute redirectTo="/login" />}>
-          <Route path="/contacts" element={<ContactsPage />}>
-            <Route index element={<AllContacts />} />
-            <Route path="addcontact" element={ <ContactForm/>} />
-            <Route path="favorites" element={<div>favorites</div>} />
-            <Route path="coworkers" element={<div>coWorkers</div>} />
-            <Route path="family" element={<div>family</div>} />
-            <Route path="friends" element={<div>friends</div>} />
-            <Route path="other" element={<div>others</div>} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Route>
         </Route>
       </Route>
+      <Route element={<PrivateRoute redirectTo="/login" />}>
+        <Route path="/contacts" element={<ContactsPage />}>
+          <Route index element={<AllContacts />} />
+          <Route path="addcontact" element={<ContactForm />} />
+          <Route path="favorites" element={<div>favorites</div>} />
+          <Route path="coworkers" element={<div>coWorkers</div>} />
+          <Route path="family" element={<div>family</div>} />
+          <Route path="friends" element={<div>friends</div>} />
+          <Route path="other" element={<div>others</div>} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Route>
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };

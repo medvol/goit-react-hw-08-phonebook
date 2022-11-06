@@ -21,8 +21,7 @@ export const Navigation = () => {
   const [value, setValue] = useState('/');
   const { isLoggedIn } = useAuth();
 
-  const handleChange = (_, newValue) => {
-    console.log(newValue);
+  const handleChange = (_, newValue) => {   
     setValue(newValue);
   };
 

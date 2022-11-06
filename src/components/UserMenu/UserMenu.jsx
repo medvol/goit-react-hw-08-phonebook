@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { logOut } from 'redux/auth/operations';
 import { useAuth } from 'hooks/useAuth';
 import {
   Box,
@@ -16,7 +14,6 @@ import LogOutButton from 'components/LogOutButton/LogOutButton';
 
 export const UserMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const dispatch = useDispatch();
   const { user } = useAuth();
   const settings = ['Profile', 'Account'];
 
@@ -83,8 +80,7 @@ export const UserMenu = () => {
       <Typography variant="body2" component="p" color="secondary">
         Welcome, {user.name}!
       </Typography>
-
-      <LogOutButton onClick={() => dispatch(logOut())} />
+      <LogOutButton />
     </Box>
   );
 };

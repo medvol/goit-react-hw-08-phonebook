@@ -15,7 +15,7 @@ export default function Hero() {
       }}
     >
      
-        <Fade in timeout={3000} easing="cubic-bezier(0.37, 0, 0.63, 1)">
+        <Fade in timeout={2000} easing="cubic-bezier(0.37, 0, 0.63, 1)">
           <Box>
             <Typography variant="h3" component="h1" sx={{ fontWeight: 700 }}>
               {' '}
@@ -57,7 +57,7 @@ export default function Hero() {
         </Fade>
      
 
-      <Fade in timeout={5500} easing="cubic-bezier(0.37, 0, 0.63, 1)">
+      <Fade in timeout={3000} easing="cubic-bezier(0.37, 0, 0.63, 1)">
         <Box
           component="img"
           sx={{
